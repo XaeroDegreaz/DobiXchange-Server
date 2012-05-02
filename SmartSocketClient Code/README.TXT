@@ -1,0 +1,1 @@
+This is the actual client code that is ran from the Android application. I'm including it in this repository as reference for those who want to see how client and server communication work for SmartSOcket and SmartSocket clients using the Java API. Enjoy!

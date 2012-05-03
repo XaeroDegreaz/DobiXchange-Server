@@ -34,6 +34,7 @@ public class SettingsForm extends javax.swing.JFrame {
  
 		// Move the window
 		setLocation(x, y);
+		this.setIconImage( DobiXchangeServer.instance.imageIcon.getImage() );
 		
 		try {
 			txtPhotoshop.setText( DobiXchangeServer.configuration.get( "photoshop" ).getAsString() ); 
@@ -61,6 +62,7 @@ public class SettingsForm extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("DobiXchange Server Settings");
 
         btnBrowseHome.setText("Browse...");
         btnBrowseHome.addActionListener(new java.awt.event.ActionListener() {
@@ -98,16 +100,13 @@ public class SettingsForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addGap(194, 194, 194))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
+                    .addComponent(jLabel2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtHome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                             .addComponent(txtPhotoshop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
@@ -115,9 +114,7 @@ public class SettingsForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBrowseHome)
                             .addComponent(btnBrowsePhotoshop)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnSave)))
+                    .addComponent(btnSave))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -228,6 +225,7 @@ public class SettingsForm extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater( new Runnable() {
 
+			@Override
 			public void run() {
 				new SettingsForm().setVisible( true );
 			}

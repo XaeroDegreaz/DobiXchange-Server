@@ -1,11 +1,14 @@
 package com.dobydigital.dobixchange.server;
 
+import com.dobydigital.dobixchange.forms.AboutDialog;
 import com.dobydigital.dobixchange.forms.SettingsForm;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,10 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import net.smartsocket.Config;
 import net.smartsocket.Logger;
 import net.smartsocket.forms.ConsoleForm;
@@ -34,6 +38,7 @@ import net.smartsocket.serverextensions.TCPExtension;
 public class DobiXchangeServer extends TCPExtension {
 	public static JsonObject configuration;
 	private Map<TCPClient, SyncMonitor> syncMonitors = new HashMap<TCPClient, SyncMonitor>();
+	public static DobiXchangeServer instance;
 	
 	/**
 	 * @param args the command line arguments
@@ -46,6 +51,7 @@ public class DobiXchangeServer extends TCPExtension {
 	public DobiXchangeServer() {		
 		super( 8888 );
 		this.imageIcon = new ImageIcon( getContextClassLoader().getResource( "com/dobydigital/dobixchange/resources/logo.png") );
+		instance = this;
 	}
 	
 	/**
@@ -174,14 +180,30 @@ public class DobiXchangeServer extends TCPExtension {
 		
 		//# Add something to the 'File' menu that allows users to change home, and Photoshop locations
 		JMenu fileMenu = ConsoleForm.menuBar.getMenu( 0 );
+		JMenu helpMenu = ConsoleForm.menuBar.getMenu( 1 );
+		
+		//# Change the edit menu item to help
+		helpMenu.setText( "Help" );
+		
 		JMenuItem fileSettingsMenuItem = new JMenuItem( "Settings...");
 		fileMenu.add( fileSettingsMenuItem );
+		
+		JMenuItem aboutDialogMenuItem = new JMenuItem( "About DobiXchange Server");
+		helpMenu.add( aboutDialogMenuItem );		
 		
 		fileSettingsMenuItem.addActionListener( new ActionListener() {
 
 			@Override
 			public void actionPerformed( ActionEvent e ) {
 				SettingsForm.main( null );
+			}
+		});
+		
+		aboutDialogMenuItem.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed( ActionEvent e ) {
+				AboutDialog.main( null );
 			}
 		});
 		
@@ -238,6 +260,7 @@ public class DobiXchangeServer extends TCPExtension {
 			//# Couldn't find the config file, so we write our default one.
 			Logger.log( "Could not load config. Launching settings form." );
 			SettingsForm.main( null );
+			AboutDialog.main( null );
 		}
 	}
 }
